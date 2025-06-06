@@ -1,17 +1,25 @@
-import { OpenAI } from "@langchain/openai";
-import { RetrievalQAChain } from 'langchain/chains';
-import type { AccessLevel } from "../models/permissions";
-import { VectorStoreService } from "./vectorStore";
+import { OpenAI } from '@langchain/openai';
+import type { AccessLevel } from '../models/permissions';
+import { config } from '../config/environment';
+import { VectorStoreService } from './vectorStore';
 
 export class LLMService {
   private llm: OpenAI;
   private vectorStore: VectorStoreService;
 
+  constructor() {
+    this.llm = new OpenAI({ openAIApiKey: config.openai.apiKey });
+    this.vectorStore = new VectorStoreService();
+  }
+
   async generateResponse(
     prompt: string,
-    context: any,
     accessLevel: AccessLevel
   ) {
-    // Implement LLM chain with context and guardrails
+    const results = await this.vectorStore.queryMemory(prompt, accessLevel);
+    const contextText = results.map((r: any) => r.payload.text).join('\n');
+    const finalPrompt = `${contextText}\n${prompt}`;
+    const response = await this.llm.call(finalPrompt);
+    return response;
   }
 }
