@@ -1,10 +1,10 @@
-import { PermissionGuard, AccessLevel } from '../src/models/permissions';
+import { PermissionGuard } from '../src/models/permissions';
 
 describe('PermissionGuard.validateAccess', () => {
   test('resolves to a boolean', async () => {
     const result = await PermissionGuard.validateAccess(
-      'user1',
-      AccessLevel.PUBLIC
+      "PUBLIC",
+      ['user1']
     );
     expect(typeof result).toBe('boolean');
   });
