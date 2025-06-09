@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "jest tests/end-to-end.test.ts --config jest.config.js"
   },
   "keywords": [],
   "author": "",
