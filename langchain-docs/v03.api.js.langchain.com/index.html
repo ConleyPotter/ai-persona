@@ -1,0 +1,88 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charset="utf-8"/><link rel="canonical" href="index.html"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>LangChain.js</title><meta name="description" content="Documentation for LangChain.js"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><script>
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.keyCode === 75) { // Check for CMD + K or CTRL + K
+      const input = document.getElementById('tsd-search-field'); // Get the search input element by ID
+      input.focus(); // Focus on the search input element
+      document.getElementById('tsd-search').style.display = 'block'; // Show the div wrapper with ID tsd-search
+    }
+  }, false); // Add event listener for keydown events
+</script><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"><div class="version-select">
+<select id="version-dropdown" onchange="window.location.href=this.value;">
+  <option selected value="">v0.3</option>
+  <option value="https://v02.api.js.langchain.com/">v0.2</option>
+  <option value="https://v01.api.js.langchain.com/">v0.1</option>
+</select>
+</div></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">LangChain.js</a></div><div class="table-cell" id="tsd-widgets"><a href="index.html#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h2>LangChain.js</h2></div><div class="tsd-panel tsd-typography"><a id="md:🦜️🔗-langchainjs" class="tsd-anchor"></a><h1 class="tsd-anchor-link">🦜️🔗 LangChain.js<a href="index.html#md:🦜️🔗-langchainjs" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1><p>⚡ Building applications with LLMs through composability ⚡</p>
+<p><a href="https://github.com/langchain-ai/langchainjs/actions/workflows/ci.yml"><img src="https://github.com/langchain-ai/langchainjs/actions/workflows/ci.yml/badge.svg" alt="CI"></a> <img src="https://img.shields.io/npm/dm/langchain" alt="npm"> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a> <a href="https://twitter.com/langchainai"><img src="https://img.shields.io/twitter/url/https/twitter.com/langchainai.svg?style=social&amp;label=Follow%20%40LangChainAI" alt="Twitter"></a>  <a href="https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/langchain-ai/langchainjs"><img src="https://img.shields.io/static/v1?label=Dev%20Containers&amp;message=Open&amp;color=blue&amp;logo=visualstudiocode" alt="Open in Dev Containers"></a>
+<a href="https://codespaces.new/langchain-ai/langchainjs"><img src="https://github.com/codespaces/badge.svg" title="Open in Github Codespace" width="150" height="20"></a></p>
+<p>Looking for the Python version? Check out <a href="https://github.com/langchain-ai/langchain">LangChain</a>.</p>
+<p>To help you ship LangChain apps to production faster, check out <a href="https://smith.langchain.com">LangSmith</a>.
+<a href="https://smith.langchain.com">LangSmith</a> is a unified developer platform for building, testing, and monitoring LLM applications.</p>
+<a id="md:⚡️-quick-install" class="tsd-anchor"></a><h2 class="tsd-anchor-link">⚡️ Quick Install<a href="index.html#md:⚡️-quick-install" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>You can use npm, yarn, or pnpm to install LangChain.js</p>
+<p><code>npm install -S langchain</code> or <code>yarn add langchain</code> or <code>pnpm add langchain</code></p>
+<a id="md:🌐-supported-environments" class="tsd-anchor"></a><h2 class="tsd-anchor-link">🌐 Supported Environments<a href="index.html#md:🌐-supported-environments" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>LangChain is written in TypeScript and can be used in:</p>
+<ul>
+<li>Node.js (ESM and CommonJS) - 18.x, 19.x, 20.x, 22.x</li>
+<li>Cloudflare Workers</li>
+<li>Vercel / Next.js (Browser, Serverless and Edge functions)</li>
+<li>Supabase Edge Functions</li>
+<li>Browser</li>
+<li>Deno</li>
+</ul>
+<a id="md:🤔-what-is-langchain" class="tsd-anchor"></a><h2 class="tsd-anchor-link">🤔 What is LangChain?<a href="index.html#md:🤔-what-is-langchain" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p><strong>LangChain</strong> is a framework for developing applications powered by language models. It enables applications that:</p>
+<ul>
+<li><strong>Are context-aware</strong>: connect a language model to sources of context (prompt instructions, few shot examples, content to ground its response in, etc.)</li>
+<li><strong>Reason</strong>: rely on a language model to reason (about how to answer based on provided context, what actions to take, etc.)</li>
+</ul>
+<p>This framework consists of several parts.</p>
+<ul>
+<li><strong>Open-source libraries</strong>: Build your applications using LangChain's open-source <a href="https://js.langchain.com/docs/concepts/lcel">building blocks</a>, <a href="https://js.langchain.com/docs/concepts">components</a>, and <a href="https://js.langchain.com/docs/integrations/platforms/">third-party integrations</a>.
+Use <a href="https://js.langchain.com/docs/concepts/#langgraphjs">LangGraph.js</a> to build stateful agents with first-class streaming and human-in-the-loop support.</li>
+<li><strong>Productionization</strong>: Use <a href="https://docs.smith.langchain.com/">LangSmith</a> to inspect, monitor and evaluate your chains, so that you can continuously optimize and deploy with confidence.</li>
+<li><strong>Deployment</strong>: Turn your LangGraph applications into production-ready APIs and Assistants with <a href="https://langchain-ai.github.io/langgraph/cloud/">LangGraph Cloud</a>.</li>
+</ul>
+<p>The LangChain libraries themselves are made up of several different packages.</p>
+<ul>
+<li><strong><a href="https://github.com/langchain-ai/langchainjs/blob/main/langchain-core"><code>@langchain/core</code></a></strong>: Base abstractions and LangChain Expression Language.</li>
+<li><strong><a href="https://github.com/langchain-ai/langchainjs/blob/main/libs/langchain-community"><code>@langchain/community</code></a></strong>: Third party integrations.</li>
+<li><strong><a href="https://github.com/langchain-ai/langchainjs/blob/main/langchain"><code>langchain</code></a></strong>: Chains, agents, and retrieval strategies that make up an application's cognitive architecture.</li>
+<li><strong><a href="https://langchain-ai.github.io/langgraphjs/">LangGraph.js</a></strong>: LangGraph powers production-grade agents, trusted by Linkedin, Uber, Klarna, GitLab, and many more. Build robust and stateful multi-actor applications with LLMs by modeling steps as edges and nodes in a graph. Integrates smoothly with LangChain, but can be used without it.</li>
+</ul>
+<p>Integrations may also be split into their own compatible packages.</p>
+<p><img src="https://github.com/langchain-ai/langchainjs/blob/main/docs/core_docs/static/svg/langchain_stack_062024.svg" alt="LangChain Stack"></p>
+<p>This library aims to assist in the development of those types of applications. Common examples of these applications include:</p>
+<p><strong>❓Question Answering over specific documents</strong></p>
+<ul>
+<li><a href="https://js.langchain.com/docs/tutorials/rag/">Documentation</a></li>
+<li>End-to-end Example: <a href="https://github.com/dissorial/doc-chatbot">Doc-Chatbot</a></li>
+</ul>
+<p><strong>💬 Chatbots</strong></p>
+<ul>
+<li><a href="https://js.langchain.com/docs/tutorials/chatbot">Documentation</a></li>
+<li>End-to-end Example: <a href="https://github.com/langchain-ai/chat-langchain">Chat-LangChain</a></li>
+</ul>
+<a id="md:🚀-how-does-langchain-help" class="tsd-anchor"></a><h2 class="tsd-anchor-link">🚀 How does LangChain help?<a href="index.html#md:🚀-how-does-langchain-help" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The main value props of the LangChain libraries are:</p>
+<ol>
+<li><strong>Components</strong>: composable tools and integrations for working with language models. Components are modular and easy-to-use, whether you are using the rest of the LangChain framework or not</li>
+<li><strong>Off-the-shelf chains</strong>: built-in assemblages of components for accomplishing higher-level tasks</li>
+</ol>
+<p>Off-the-shelf chains make it easy to get started. Components make it easy to customize existing chains and build new ones.</p>
+<p>Components fall into the following <strong>modules</strong>:</p>
+<p><strong>📃 Model I/O:</strong></p>
+<p>This includes prompt management, prompt optimization, a generic interface for all LLMs, and common utilities for working with LLMs.</p>
+<p><strong>📚 Retrieval:</strong></p>
+<p>Data Augmented Generation involves specific types of chains that first interact with an external data source to fetch data for use in the generation step. Examples include summarization of long pieces of text and question/answering over specific data sources.</p>
+<p><strong>🤖 Agents:</strong></p>
+<p>Agents allow an LLM autonomy over how a task is accomplished. Agents make decisions about which Actions to take, then take that Action, observe the result, and repeat until the task is complete. LangChain provides a <a href="https://js.langchain.com/docs/concepts/#agents">standard interface for agents</a>, along with <a href="https://github.com/langchain-ai/langgraphjs/">LangGraph.js</a> for building custom agents.</p>
+<a id="md:📖-documentation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">📖 Documentation<a href="index.html#md:📖-documentation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Please see <a href="https://js.langchain.com">here</a> for full documentation, which includes:</p>
+<ul>
+<li><a href="https://js.langchain.com/docs/introduction">Getting started</a>: installation, setting up the environment, simple examples</li>
+<li>Overview of the <a href="https://js.langchain.com/docs/how_to/lcel_cheatsheet/">interfaces</a>, <a href="https://js.langchain.com/docs/concepts">modules</a> and <a href="https://js.langchain.com/docs/integrations/platforms/">integrations</a></li>
+<li><a href="https://js.langchain.com/docs/tutorials/">Tutorial</a> walkthroughs</li>
+<li><a href="https://api.js.langchain.com">Reference</a>: full API docs</li>
+</ul>
+<a id="md:💁-contributing" class="tsd-anchor"></a><h2 class="tsd-anchor-link">💁 Contributing<a href="index.html#md:💁-contributing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it be in the form of a new feature, improved infrastructure, or better documentation.</p>
+<p>For detailed information on how to contribute, see <a href="https://github.com/langchain-ai/langchainjs/blob/main/CONTRIBUTING.md">here</a>.</p>
+<p>Please report any security issues or concerns following our <a href="https://github.com/langchain-ai/langchainjs/blob/main/SECURITY.md">security guidelines</a>.</p>
+<a id="md:🖇️-relationship-with-python-langchain" class="tsd-anchor"></a><h2 class="tsd-anchor-link">🖇️ Relationship with Python LangChain<a href="index.html#md:🖇️-relationship-with-python-langchain" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>This is built to integrate as seamlessly as possible with the <a href="https://github.com/langchain-ai/langchain">LangChain Python package</a>. Specifically, this means all objects (prompts, LLMs, chains, etc) are designed in a way where they can be serialized and shared between languages.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="index.html#md:🦜️🔗-langchainjs"><span>🦜️🔗 <wbr/>Lang<wbr/>Chain.js</span></a><ul><li><a href="index.html#md:⚡️-quick-install"><span>⚡️ <wbr/>Quick <wbr/>Install</span></a></li><li><a href="index.html#md:🌐-supported-environments"><span>🌐 <wbr/>Supported <wbr/>Environments</span></a></li><li><a href="index.html#md:🤔-what-is-langchain"><span>🤔 <wbr/>What is <wbr/>Lang<wbr/>Chain?</span></a></li><li><a href="index.html#md:🚀-how-does-langchain-help"><span>🚀 <wbr/>How does <wbr/>Lang<wbr/>Chain help?</span></a></li><li><a href="index.html#md:📖-documentation"><span>📖 <wbr/>Documentation</span></a></li><li><a href="index.html#md:💁-contributing"><span>💁 <wbr/>Contributing</span></a></li><li><a href="index.html#md:🖇️-relationship-with-python-langchain"><span>🖇️ <wbr/>Relationship with <wbr/>Python <wbr/>Lang<wbr/>Chain</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="index.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="assets/icons.svg#icon-1"></use></svg><span>LangChain.js</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="."><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
