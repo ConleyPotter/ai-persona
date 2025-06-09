@@ -14,19 +14,67 @@ import axios, { AxiosInstance } from 'axios';
 // --- Mocks & Test Setup ---
 // In a real-world scenario, you would mock the LLM and embedding services
 // to avoid actual API calls to providers like OpenAI.
-jest.mock('./services/llmService', () => ({
-  extractThemes: jest.fn().mockResolvedValue(['personal-growth', 'career']),
-  extractNarrativeElements: jest.fn().mockResolvedValue({
-    protagonist: 'self',
-    desire: 'To learn a new skill',
-    obstacle: 'Lack of time',
-    tone: 'motivated',
-  }),
-  summarizeText: jest.fn().mockResolvedValue('The user wrote about their motivation to learn a new skill despite time constraints.'),
+jest.mock('../src/services/llm', () => ({
+  LLMService: jest.fn().mockImplementation(() => ({
+    extractThemes: jest.fn().mockResolvedValue(['personal-growth', 'career']),
+    extractNarrativeElements: jest.fn().mockResolvedValue({
+      protagonist: 'self',
+      desire: 'To learn a new skill',
+      obstacle: 'Lack of time',
+      tone: 'motivated',
+    }),
+    summarizeText: jest.fn().mockResolvedValue('The user wrote about their motivation to learn a new skill despite time constraints.'),
+    generateResponse: jest.fn().mockImplementation(async (prompt: string, accessLevel: any) => {
+      // Mock RAG process with access level awareness
+      if (accessLevel.scope === 'chat_interface') {
+        return {
+          text: "Based on the available information, the user is working on a side project focused on learning new skills.",
+          metadata: {
+            confidence: 0.95,
+            sources: ['promoted-memory-1']
+          }
+        };
+      }
+      return {
+        text: "I cannot provide that information due to privacy restrictions.",
+        metadata: {
+          confidence: 0,
+          reason: "insufficient_access_level"
+        }
+      };
+    })
+  }))
 }));
 
-jest.mock('./services/embeddingService', () => ({
-  embed: jest.fn().mockResolvedValue(Array.from({ length: 1536 }, () => Math.random())),
+jest.mock('../src/services/vectorStore', () => ({
+  VectorStoreService: jest.fn().mockImplementation(() => ({
+    storeMemory: jest.fn().mockImplementation(async (text: string, metadata: any) => {
+      // Mock storing memory with proper metadata
+      return {
+        id: 'mock-id-' + Math.random(),
+        text,
+        metadata: {
+          ...metadata,
+          embedding: Array.from({ length: 1536 }, () => Math.random())
+        }
+      };
+    }),
+    queryMemory: jest.fn().mockImplementation(async (query: string, accessLevel: any) => {
+      // Mock querying memory with access level filtering
+      return [{
+        id: 'mock-result-id',
+        score: 0.95,
+        payload: {
+          text: 'Mock result text',
+          metadata: {
+            accessLevel: accessLevel.scope,
+            themes: ['mock-theme'],
+            narrative_elements: ['mock-narrative']
+          }
+        }
+      }];
+    })
+  }))
 }));
 
 
@@ -295,3 +343,34 @@ describe('AI Persona API - E2E Test Suite', () => {
   });
 
 });
+
+
+/*
+
+How to Use This Test Suite
+Environment Setup: Before running these tests, ensure your environment is correctly configured. You'll need:
+
+  * A running instance of your AI Persona API.
+  * The base URL of your API server set as an environment variable (API_BASE_URL).
+  * A separate, dedicated test database (e.g., a test instance or collection in Qdrant) to avoid interfering with development or production data.
+  * Valid Bearer tokens for each of the three scopes (STRICT_PRIVATE, RESTRICTED, PUBLIC) available as environment variables.
+  * Dependencies: Install the necessary development dependencies for your project.
+
+```bash
+npm install --save-dev jest ts-jest @types/jest axios
+```
+
+Mocking Services: The provided code includes mocks for your LLM and embedding services. You will need to adjust the file paths in jest.mock('./services/llmService', ...) to match the actual location of these services in your project structure. This is crucial for creating fast, reliable, and cost-effective tests.
+
+Running Tests: Configure your package.json with a test script and then run the suite from your terminal.
+
+In package.json:
+JSON
+
+"scripts": {
+  "test:e2e": "jest --config jest.e2e.config.js"
+}
+You will likely need a separate Jest configuration file (jest.e2e.config.js) to specify the test match patterns for your E2E tests.
+This suite provides a strong foundation for ensuring the quality and reliability of your AI Persona API by testing its core features from an external, user-like perspective.
+
+*/
