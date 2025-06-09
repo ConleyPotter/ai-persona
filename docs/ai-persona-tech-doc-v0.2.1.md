@@ -1,4 +1,4 @@
-# AI Persona Project – Technical Documentation (v0.2)
+# AI Persona Project – Technical Documentation (v0.2.1)
 
 ---
 
