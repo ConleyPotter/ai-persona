@@ -7,7 +7,11 @@ import type { AccessLevel } from '../models/permissions';
 export class VectorStoreService {
   private client: QdrantClient;
   private embeddings: OpenAIEmbeddings;
-  private collection = 'memories';
+  private collections = {
+    journal: 'journal_entries',
+    persona: 'persona_memory',
+    public: 'public_knowledge'
+  };
 
   constructor() {
     this.client = new QdrantClient({
@@ -19,29 +23,67 @@ export class VectorStoreService {
     });
   }
 
-  async storeMemory(text: string, metadata: any) {
+  async storeMemory(text: string, metadata: any, collection: 'journal' | 'persona' | 'public') {
     const vector = await this.embeddings.embedQuery(text);
-    await this.client.upsert(this.collection, {
+    const id = randomUUID();
+    
+    await this.client.upsert(this.collections[collection], {
       wait: true,
       points: [
         {
-          id: randomUUID(),
+          id,
           vector,
-          payload: { text, ...metadata },
+          payload: {
+            text,
+            ...metadata,
+            embedding: vector,
+            created_at: new Date().toISOString()
+          },
         },
       ],
     });
+
+    return { id, text, metadata: { ...metadata, embedding: vector } };
   }
 
   async queryMemory(query: string, accessLevel: AccessLevel) {
     const vector = await this.embeddings.embedQuery(query);
-    const results = await this.client.search(this.collection, {
-      vector,
-      limit: 5,
-      filter: {
-        must: [{ key: 'accessLevel', match: { value: accessLevel } }],
-      },
-    });
-    return results;
+    
+    // Determine which collections to search based on access level
+    const collections = this.getAccessibleCollections(accessLevel);
+    
+    // Search each accessible collection
+    const results = await Promise.all(
+      collections.map(collection =>
+        this.client.search(collection, {
+          vector,
+          limit: 5,
+          filter: {
+            must: [
+              { key: 'accessLevel', match: { value: accessLevel.scope } }
+            ],
+          },
+        })
+      )
+    );
+
+    // Combine and sort results by score
+    return results
+      .flat()
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5);
+  }
+
+  private getAccessibleCollections(accessLevel: AccessLevel): string[] {
+    switch (accessLevel.scope) {
+      case 'companion_only':
+        return [this.collections.journal];
+      case 'persona_api':
+        return [this.collections.journal, this.collections.persona];
+      case 'chat_interface':
+        return [this.collections.public];
+      default:
+        return [];
+    }
   }
 }
