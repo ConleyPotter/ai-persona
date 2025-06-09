@@ -39,7 +39,7 @@ All endpoints are served over `https://api.<domain>/v0/` and accept/return JSON.
 | Persona | DELETE `/persona/memory/:id` | Delete candidate or active persona memory | RESTRICTED |
 | Public | POST `/chat/public-query` | Submit a question for portfolio bot | PUBLIC |
 
-*(See Appendix A for complete request/response examples.)*
+*(See Appendix A for complete request/response examples.)*
 
 ---
 
@@ -48,8 +48,8 @@ We persist three vector‑indexed tables (1536‑dim OpenAI embeddings):
 
 | Layer | Primary Key | Core Fields | Access |
 |-------|------------|------------|--------|
-| `journal_entries` | `entry_id` | `content`, `emotional_markers`, `theme_markers`, `embedding`, `public_elevation_blocked` (bool) | STRICT_PRIVATE |
-| `persona_memory` | `memory_id` | `theme`, `narrative_elements`, `summary`, `source_entry_refs[]`, `embedding`, `privacy_level` | RESTRICTED |
+| `journal_entries` | `entry_id` | `content`, `emotional_markers`, `themes`, `embedding`, `public_elevation_blocked` (bool) | STRICT_PRIVATE |
+| `persona_memory` | `memory_id` | `themes`, `narrative_elements`, `summary`, `source_entry_refs[]`, `embedding`, `privacy_level` | RESTRICTED |
 | `persona_memory_candidates` | `candidate_id` | Same as `persona_memory` + `status` (`awaiting_review`, `promoted`, `rejected`) | RESTRICTED |
 | `public_knowledge` | `topic_id` | `approved_content`, `context_rules`, `guardrail_rules`, `embedding` | PUBLIC |
 
@@ -59,7 +59,7 @@ type JournalEntry = {
   entry_id: string
   content: string
   emotional_markers: string[]
-  themes: string[]
+  themes: string[]  // User-selected themes (1-5) from existing theme list
   embedding: number[]
   public_elevation_blocked: boolean
   created_at: Date
@@ -68,7 +68,7 @@ type JournalEntry = {
 type PersonaMemoryCandidate = {
   candidate_id: string
   summary: string
-  themes: string[]
+  themes: string[]  // AI-classified themes (1-5) from existing theme list
   narrative_elements: string[]
   source_entry_refs: string[]
   embedding: number[]
@@ -93,7 +93,7 @@ The goal is to convert a raw journal entry into a **Persona Memory Candidate** t
 3. **Theme Classification**
    ```ts
    const themePrompt = new PromptTemplate({
-     template: "Classify the text into one or more of the predefined themes: {themes}. Return a JSON array.",
+     template: "Classify the text into 1-5 most relevant themes from the predefined theme list: {themes}. Return a JSON array.",
      inputVariables: ["text", "themes"]
    })
    const themeChain = new LLMChain({ llm, prompt: themePrompt })
@@ -117,7 +117,7 @@ The goal is to convert a raw journal entry into a **Persona Memory Candidate** t
    const candidate: PersonaMemoryCandidate = {
      candidate_id: uuid(),
      summary,
-     themes: string[]
+     themes: themes,  // AI-classified themes from step 3
      narrative_elements: narrative,
      source_entry_refs: [entry.entry_id],
      embedding: await embedder.embed(summary),
