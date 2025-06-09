@@ -1,6 +1,6 @@
 import { OpenAI } from '@langchain/openai';
 import { PromptTemplate } from '@langchain/core/prompts';
-import { LLMChain } from 'langchain/chains';
+import { RunnableSequence } from '@langchain/core/runnables';
 import type { AccessLevel } from '../models/permissions';
 import { config } from '../config/environment';
 import { VectorStoreService } from './vectorStore';
@@ -50,24 +50,38 @@ Response:`,
   }
 
   async extractThemes(text: string): Promise<string[]> {
-    const themeChain = new LLMChain({ llm: this.llm, prompt: this.themePrompt });
-    const { text: themes } = await themeChain.call({ 
+    const chain = RunnableSequence.from([
+      this.themePrompt,
+      this.llm,
+      (output) => JSON.parse(output)
+    ]);
+    
+    const result = await chain.invoke({ 
       text, 
       themes: ['personal-growth', 'career', 'creativity', 'work', 'health', 'relationships'] 
     });
-    return JSON.parse(themes);
+    return result;
   }
 
   async extractNarrativeElements(text: string) {
-    const narrativeChain = new LLMChain({ llm: this.llm, prompt: this.narrativePrompt });
-    const { text: narrative } = await narrativeChain.call({ text });
-    return JSON.parse(narrative);
+    const chain = RunnableSequence.from([
+      this.narrativePrompt,
+      this.llm,
+      (output) => JSON.parse(output)
+    ]);
+    
+    const result = await chain.invoke({ text });
+    return result;
   }
 
   async summarizeText(text: string): Promise<string> {
-    const summaryChain = new LLMChain({ llm: this.llm, prompt: this.summaryPrompt });
-    const { text: summary } = await summaryChain.call({ text });
-    return summary;
+    const chain = RunnableSequence.from([
+      this.summaryPrompt,
+      this.llm
+    ]);
+    
+    const result = await chain.invoke({ text });
+    return result;
   }
 
   async generateResponse(
@@ -92,8 +106,12 @@ Response:`,
     const contextText = results.map((r: any) => r.payload.text).join('\n');
     
     // Generate response using the context
-    const responseChain = new LLMChain({ llm: this.llm, prompt: this.responsePrompt });
-    const { text: response } = await responseChain.call({
+    const chain = RunnableSequence.from([
+      this.responsePrompt,
+      this.llm
+    ]);
+    
+    const response = await chain.invoke({
       context: contextText,
       query: prompt,
       accessLevel: accessLevel.scope
