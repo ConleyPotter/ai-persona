@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PrivacyLevel {
+  STRICT_PRIVATE
+  RESTRICTED
+  PUBLIC
+}
+
+enum CandidateStatus {
+  AWAITING_REVIEW
+  PROMOTED
+  REJECTED
+}
+
+model JournalEntry {
+  id                    String   @id @default(uuid())
+  content              String   @db.Text
+  emotionalMarkers     String[]
+  themes              String[]
+  embedding           Float[]
+  publicElevationBlocked Boolean @default(false)
+  createdAt           DateTime @default(now()) @map("created_at")
+  sourceForCandidates PersonaMemoryCandidate[] @relation("SourceEntry")
+
+  @@map("journal_entries")
+}
+
+model PersonaMemory {
+  id                String   @id @default(uuid())
+  themes           String[]
+  narrativeElements String[] @map("narrative_elements")
+  summary          String   @db.Text
+  sourceEntryRefs  String[] @map("source_entry_refs")
+  embedding        Float[]
+  privacyLevel     PrivacyLevel @default(RESTRICTED)
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  @@map("persona_memory")
+}
+
+model PersonaMemoryCandidate {
+  id                String   @id @default(uuid())
+  summary          String   @db.Text
+  themes           String[]
+  narrativeElements String[] @map("narrative_elements")
+  sourceEntryRefs  String[] @map("source_entry_refs")
+  embedding        Float[]
+  privacyLevel     PrivacyLevel @default(RESTRICTED)
+  status           CandidateStatus @default(AWAITING_REVIEW)
+  createdAt        DateTime @default(now()) @map("created_at")
+  sourceEntries    JournalEntry[] @relation("SourceEntry")
+
+  @@map("persona_memory_candidates")
+}
+
+model PublicKnowledge {
+  id              String   @id @default(uuid())
+  approvedContent String   @db.Text
+  contextRules    String[] @map("context_rules")
+  guardrailRules  String[] @map("guardrail_rules")
+  embedding       Float[]
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@map("public_knowledge")
+} 
