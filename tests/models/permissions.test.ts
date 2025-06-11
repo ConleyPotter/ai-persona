@@ -1,4 +1,4 @@
-import { PermissionGuard } from '../src/models/permissions';
+import { PermissionGuard } from '../../src/models/permissions';
 
 describe('PermissionGuard.validateAccess', () => {
   test('resolves to a boolean', async () => {
